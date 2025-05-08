@@ -55,6 +55,9 @@ function TrackProductRedirect() {
           { withCredentials: true },
         );
 
+        console.log(`Event source: ${eventSource}`);
+
+
         eventSource.onopen = () => {
           setTrackingStatus("Connected to server");
           setStatusMessages((prev) => [...prev, "Connected to server"]);
