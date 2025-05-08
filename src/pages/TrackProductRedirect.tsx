@@ -51,7 +51,7 @@ function TrackProductRedirect() {
         if (!productUrl) throw new Error("No product URL found");
 
         const eventSource = new EventSource(
-          `${backendUrl}api/crawl/BC?url=${encodeURIComponent(productUrl)}&sse=true`,
+          `${backendUrl}api/crawl/BC?sse=true&url=${encodeURIComponent(productUrl)}`,
           { withCredentials: true },
         );
 

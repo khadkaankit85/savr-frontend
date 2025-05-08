@@ -24,7 +24,7 @@ function LoginPage() {
   const { setUser } = useUser();
 
   const handleLoginClick = () => {
-    window.location.href = `${backendUrl}"api/user/auth/google`;
+    window.location.href = `${backendUrl}api/user/auth/google`;
   };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
