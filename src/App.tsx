@@ -10,6 +10,7 @@ import NotFound from "./pages/NotFound";
 import { Toaster } from "./components/ui/toaster";
 import RedirectIfLoggedInTo from "./utils/redirector";
 import TrackProductRedirectIfNotLoggedIn from "./pages/TrackProductRedirect";
+import { Analytics } from "@vercel/analytics/react";
 
 function App() {
   return (
@@ -59,6 +60,7 @@ function App() {
         {/* 404 Route - This should be the last route */}
         <Route path="*" element={<NotFound />} />
       </Routes>
+      <Analytics />
     </Router>
   );
 }
