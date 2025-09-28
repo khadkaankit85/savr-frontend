@@ -285,15 +285,14 @@ export default function ProductDetailsPage() {
               </div>
 
               <div className="mb-6">
-                <a
-                  href={product.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <button
+                  onClick={() => window.open(product.url, "_blank", "noopener,noreferrer")}
                   className="bg-teal-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg inline-block text-center w-full"
                 >
                   View on Site
-                </a>
+                </button>
               </div>
+
 
               <div className="border-t border-gray-200 pt-4">
                 <h3 className="text-lg font-semibold mb-2">Product Details</h3>
