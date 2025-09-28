@@ -77,20 +77,19 @@ export default function ProductDetailsPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
+  const normalizeUrl = (url: string) => {
+    if (!url) return "#";
+    let cleanUrl = url.trim();
+  
+    // Remove malformed http/https prefixes: https://, https:/, https//, http://, http:/, http//
+    cleanUrl = cleanUrl.replace(/^https?:\/{0,2}/, "");
+  
+    // Prepend proper https://
+    return `https://${cleanUrl}`;
+  };
+
   useEffect(() => {
     if (!productId) return;
-  
-    const normalizeUrl = (url: string) => {
-      if (!url) return "#";
-      let cleanUrl = url.trim();
-    
-      // Remove any leading https://, https:/, https//, http://, http:/, http//
-      cleanUrl = cleanUrl.replace(/^https?:\/{0,2}/, "");
-    
-      // Prepend proper https://
-      return `https://${cleanUrl}`;
-    };
-
   
     async function fetchProductDetails() {
       try {
@@ -117,6 +116,7 @@ export default function ProductDetailsPage() {
   
     fetchProductDetails();
   }, [productId]);
+
 
 
 
@@ -306,15 +306,15 @@ export default function ProductDetailsPage() {
                   </div>
                 )} */}
               </div>
+              <div className="mb-6">
+                <button
+                  onClick={() => window.open(product.url, "_blank", "noopener,noreferrer")}
+                  className="bg-teal-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg inline-block text-center w-full"
+                >
+                  View on Site
+                </button>
+              </div>
 
-              <a
-                href={`https://${product.url}`} // ensure absolute URL
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-teal-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg inline-block text-center w-full"
-              >
-                View on Site
-              </a>
               
               <div className="border-t border-gray-200 pt-4">
                 <h3 className="text-lg font-semibold mb-2">Product Details</h3>
