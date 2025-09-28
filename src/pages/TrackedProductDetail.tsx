@@ -82,14 +82,13 @@ export default function ProductDetailsPage() {
   
     const normalizeUrl = (url:string) => {
       if (!url) return "#";
-      // Fix single-slash https/http
-      if (url.startsWith("https:/") && !url.startsWith("https://")) {
-        return url.replace("https:/", "https://");
-      }
-      if (url.startsWith("http:/") && !url.startsWith("http://")) {
-        return url.replace("http:/", "http://");
-      }
-      return url;
+      let cleanUrl = url.trim();
+  
+      // Remove any leading https:/ or http:/ variants
+      cleanUrl = cleanUrl.replace(/^https?:\/+/, "");
+  
+      // Prepend proper https://
+      return `https://${cleanUrl}`;
     };
   
     async function fetchProductDetails() {
@@ -117,6 +116,7 @@ export default function ProductDetailsPage() {
   
     fetchProductDetails();
   }, [productId]);
+
 
 
   const formatDate = (dateString: string) => {
