@@ -80,7 +80,7 @@ export default function ProductDetailsPage() {
   useEffect(() => {
     if (!productId) return;
   
-    const normalizeUrl = (url) => {
+    const normalizeUrl = (url:string) => {
       if (!url) return "#";
       // Fix single-slash https/http
       if (url.startsWith("https:/") && !url.startsWith("https://")) {
