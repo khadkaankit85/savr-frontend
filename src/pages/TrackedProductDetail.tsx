@@ -79,23 +79,45 @@ export default function ProductDetailsPage() {
 
   useEffect(() => {
     if (!productId) return;
+  
+    const normalizeUrl = (url) => {
+      if (!url) return "#";
+      // Fix single-slash https/http
+      if (url.startsWith("https:/") && !url.startsWith("https://")) {
+        return url.replace("https:/", "https://");
+      }
+      if (url.startsWith("http:/") && !url.startsWith("http://")) {
+        return url.replace("http:/", "http://");
+      }
+      return url;
+    };
+  
     async function fetchProductDetails() {
       try {
         const response = await axios.get(
           `${backendUrl}api/products/history?productId=${productId}`,
-          { withCredentials: true },
+          { withCredentials: true }
         );
-        console.log(response);
-        setProduct(response.data.product);
+  
+        const productData = response.data.product;
+  
+        // Normalize product URL
+        if (productData?.url) {
+          productData.url = normalizeUrl(productData.url);
+        }
+  
+        console.log(productData);
+        setProduct(productData);
       } catch (error) {
         console.error("Error fetching product details:", error);
       } finally {
         setIsLoading(false);
       }
     }
-
+  
     fetchProductDetails();
   }, [productId]);
+
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -284,16 +306,15 @@ export default function ProductDetailsPage() {
                 )} */}
               </div>
 
-              <div className="mb-6">
-                <button
-                  onClick={() => window.open(product.url, "_blank", "noopener,noreferrer")}
-                  className="bg-teal-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg inline-block text-center w-full"
-                >
-                  View on Site
-                </button>
-              </div>
-
-
+              <a
+                href={`https://${product.url}`} // ensure absolute URL
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-teal-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg inline-block text-center w-full"
+              >
+                View on Site
+              </a>
+              
               <div className="border-t border-gray-200 pt-4">
                 <h3 className="text-lg font-semibold mb-2">Product Details</h3>
                 <div
