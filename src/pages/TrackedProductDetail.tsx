@@ -80,16 +80,17 @@ export default function ProductDetailsPage() {
   useEffect(() => {
     if (!productId) return;
   
-    const normalizeUrl = (url:string) => {
+    const normalizeUrl = (url: string) => {
       if (!url) return "#";
       let cleanUrl = url.trim();
-  
-      // Remove any leading https:/ or http:/ variants
-      cleanUrl = cleanUrl.replace(/^https?:\/+/, "");
-  
+    
+      // Remove any leading https://, https:/, https//, http://, http:/, http//
+      cleanUrl = cleanUrl.replace(/^https?:\/{0,2}/, "");
+    
       // Prepend proper https://
       return `https://${cleanUrl}`;
     };
+
   
     async function fetchProductDetails() {
       try {
